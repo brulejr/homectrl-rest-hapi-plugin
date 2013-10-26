@@ -1,0 +1,28 @@
+{
+  "asi": true,
+  "globalstrict": true,
+  "strict": false,
+  "curly": true,
+  "immed": true,
+  "latedef": true,
+  "newcap": true,
+  "noarg": true,
+  "sub": true,
+  "undef": true,
+  "unused": true,
+  "boss": true,
+  "eqnull": true,
+  "node": true,
+  "es5": true,
+  "laxcomma": true,
+  "globals": { "requireLib": false },
+  "predef": [
+    "describe",
+    "it",      
+    "before",  
+    "beforeEach",
+    "after",   
+    "afterEach"
+  ]
+}
+
