@@ -70,13 +70,67 @@ describe('homectrl-rest-hapi-plugin', function () {
 			});
 	    });
 
-	    it('responses to a GET of /api/homectrl/devices', function (done) {
+	    it('retrieves a list of devices via GET', function (done) {
 			server.inject({
 				method: 'GET',
 				url: '/api/homectrl/devices'
 			}, function(res) {
 				expect(res.statusCode).to.equal(200);
 				expect(res.payload).to.equal('[{"id":"DEVICE_1","enabled":true}]');
+				done();
+			});
+	    });
+
+	    it('updates an individual device via PATCH', function (done) {
+			server.inject({
+				method: 'PATCH',
+				url: '/api/homectrl/devices/DEVICE_1',
+				payload: '{ "id": "DEVICE_1", "enabled": false }'
+			}, function(res) {
+				expect(res.statusCode).to.equal(200);
+				expect(res.payload).to.equal('{"id":"DEVICE_1","enabled":false}');
+				done();
+			});
+	    });
+
+	    it('retrieves an individual device via GET', function (done) {
+			server.inject({
+				method: 'GET',
+				url: '/api/homectrl/devices/DEVICE_1'
+			}, function(res) {
+				expect(res.statusCode).to.equal(200);
+				expect(res.payload).to.equal('{"id":"DEVICE_1","enabled":false}');
+				done();
+			});
+	    });
+
+	    it('does not retrieve an unknown device via GET', function (done) {
+			server.inject({
+				method: 'GET',
+				url: '/api/homectrl/devices/DEVICE_2'
+			}, function(res) {
+				expect(res.statusCode).to.equal(404);
+				done();
+			});
+	    });
+
+	    it('deletes an individual device via DELETE', function (done) {
+			server.inject({
+				method: 'DELETE',
+				url: '/api/homectrl/devices/DEVICE_1'
+			}, function(res) {
+				expect(res.statusCode).to.equal(200);
+				expect(res.payload).to.equal('{"id":"DEVICE_1","enabled":false}');
+				done();
+			});
+	    });
+
+	    it('does not delete an unknown device via DELETE', function (done) {
+			server.inject({
+				method: 'DELETE',
+				url: '/api/homectrl/devices/DEVICE_1'
+			}, function(res) {
+				expect(res.statusCode).to.equal(404);
 				done();
 			});
 	    });
